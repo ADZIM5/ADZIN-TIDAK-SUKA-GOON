@@ -1,2 +1,0 @@
-# ADZIN-TIDAK-SUKA-GOON
-Putar woi

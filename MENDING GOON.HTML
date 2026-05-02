@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADZIM MAU MAIN ATAU TIDAK? </title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #282c34;
+            color: white;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Wadah untuk roda dan jarum */
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+
+        /* Jarum penunjuk di atas roda */
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #f1c40f;
+            z-index: 10;
+            filter: drop-shadow(0px 4px 2px rgba(0,0,0,0.5));
+        }
+
+        /* Desain Roda */
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            /* Setengah hijau (Main), setengah merah (Tidak) */
+            background: conic-gradient(#2ecc71 0% 180deg, #e74c3c 180deg 360deg);
+            border: 8px solid #fff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            position: relative;
+            /* Efek transisi putaran selama 3 detik */
+            transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        /* Teks di dalam roda */
+        .wheel-text {
+            position: absolute;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .text-main {
+            top: 40%;
+            left: 15%;
+            transform: rotate(-90deg);
+        }
+
+        .text-tidak {
+            top: 40%;
+            right: 15%;
+            transform: rotate(90deg);
+        }
+
+        /* Tombol putar */
+        button {
+            padding: 12px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Teks hasil yang ngeselin */
+        #result {
+            margin-top: 25px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #f1c40f;
+            text-align: center;
+            display: none;
+            animation: popIn 0.5s ease-out forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="title">ADZIM MAU MAIN ATAU TIDAK??</h1>
+
+    <div class="wheel-container">
+        <div class="pointer"></div>
+        <div class="wheel" id="wheel">
+            <div class="wheel-text text-main">MAIN</div>
+            <div class="wheel-text text-tidak">TIDAK</div>
+        </div>
+    </div>
+
+    <button id="spinBtn" onclick="spinWheel()">Putar anunya lupa namanya </button>
+    
+    <div id="result">PIKIR SEBDIRI</div>
+
+    <script>
+        let isSpinning = false;
+        let currentRotation = 0;
+
+        function spinWheel() {
+            // Mencegah tombol diklik berkali-kali saat roda masih berputar
+            if (isSpinning) return;
+            isSpinning = true;
+
+            const wheel = document.getElementById('wheel');
+            const resultText = document.getElementById('result');
+            const title = document.getElementById('title');
+
+            // Sembunyikan hasil sebelumnya jika ditekan lagi
+            resultText.style.display = 'none';
+            title.innerText = "Memilih...";
+
+            // Hitung putaran acak (minimal putar 5 kali penuh + derajat acak)
+            const randomExtraDegrees = Math.floor(Math.random() * 360);
+            const totalDegrees = currentRotation + 1800 + randomExtraDegrees; 
+            
+            // Simpan rotasi terakhir agar putaran selanjutnya nyambung
+            currentRotation = totalDegrees;
+
+            // Putar roda
+            wheel.style.transform = `rotate(${totalDegrees}deg)`;
+
+            // Tunggu animasi CSS selesai (3000 ms atau 3 detik)
+            setTimeout(() => {
+                // Tampilkan hasil zonk
+                title.innerText = "Hasilnya adalah...";
+                resultText.style.display = 'block';
+                
+                // Tambahkan alert juga biar makin ngeselin
+                setTimeout(() => {
+                    alert("YYTTTTAA");
+                }, 100);
+
+                isSpinning = false;
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
+              
